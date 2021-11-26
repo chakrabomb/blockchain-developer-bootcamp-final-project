@@ -1,0 +1,1 @@
+const Dapz = artifacts.require("Dapz")
