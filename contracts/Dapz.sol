@@ -12,9 +12,9 @@ contract Dapz is Ownable, ERC20 {
     uint challenge;
     uint dailyReward;
 
-    mapping(address => mapping(address=>uint)) public dailyDaps;
-    mapping(address => mapping(address=>uint)) public lastDap; 
-    mapping(address => mapping(address=>bool)) public timedOut;
+    mapping(address => mapping(address=>uint)) private dailyDaps;
+    mapping(address => mapping(address=>uint)) private lastDap; 
+    mapping(address => mapping(address=>bool)) private timedOut;
 
 
     constructor() public ERC20("Dapz", "DAPZ") {
@@ -29,14 +29,14 @@ contract Dapz is Ownable, ERC20 {
 
     }
 
-    function _dapRoll(address sender, address friend) internal returns() {
+    function _dapRoll(address sender, address friend) private {
         lastDap[sender][friend] = now;
         timedOut[sender][friend] = true;
         dailyDaps[sender][friend] = uint(keccak256(abi.encodePacked(sender,friend,now))) % (10**10);
 
     }
 
-    function _checkChallengeAndMint(address sender, address friend) internal returns(){
+    function _checkChallengeAndMint(address sender, address friend) private{
         bool senderCheck = dailyDaps[sender][friend] < challenge;
         bool friendCheck = dailDaps[friend][sender] < challenge;
 
@@ -55,14 +55,18 @@ contract Dapz is Ownable, ERC20 {
 
     }
 
-    function _dayPassed(address first, address second) internal returns(bool){
+    function _dayPassed(address first, address second) private view returns(bool){
         return (lastDap[first][second]-now) > (1 days + 2000);
 
     }
 
-    function _resetTimer(address sender, address friend) internal returns(){
+    function _resetTimer(address sender, address friend) private {
         timedOut[sender][friend] = false;
         timedOut[friend][sender] = false;
+    }
+
+    function setChallenge() public onlyOwner {
+        challenge = 100000000000;
     }
 
     
