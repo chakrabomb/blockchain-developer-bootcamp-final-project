@@ -18,27 +18,27 @@ contract Dapz is Ownable, ERC20 {
 
 
     constructor() public ERC20("Dapz", "DAPZ") {
-        difficulty = uint(keccak256(abi.encodePacked(block.difficulty % now)))%10;
+        difficulty = uint(keccak256(abi.encodePacked(block.difficulty % block.timestamp)))%10;
         
         if(difficulty == 0){
             difficulty = 1;
         }
         
-        challenge = 10 ** difficulty
+        challenge = 10 ** difficulty;
         dailyReward = (10-difficulty) **2;
 
     }
 
     function _dapRoll(address sender, address friend) private {
-        lastDap[sender][friend] = now;
+        lastDap[sender][friend] = block.timestamp;
         timedOut[sender][friend] = true;
-        dailyDaps[sender][friend] = uint(keccak256(abi.encodePacked(sender,friend,now))) % (10**10);
+        dailyDaps[sender][friend] = uint(keccak256(abi.encodePacked(sender,friend,block.timestamp))) % (10**10);
 
     }
 
     function _checkChallengeAndMint(address sender, address friend) private{
         bool senderCheck = dailyDaps[sender][friend] < challenge;
-        bool friendCheck = dailDaps[friend][sender] < challenge;
+        bool friendCheck = dailyDaps[friend][sender] < challenge;
 
         if (senderCheck && friendCheck){
             _mint(sender, 3*dailyReward);
@@ -56,7 +56,7 @@ contract Dapz is Ownable, ERC20 {
     }
 
     function _dayPassed(address first, address second) private view returns(bool){
-        return (lastDap[first][second]-now) > (1 days + 2000);
+        return (lastDap[first][second]-block.timestamp) > (1 days + 2000);
 
     }
 
@@ -70,12 +70,12 @@ contract Dapz is Ownable, ERC20 {
     }
 
     function getRoll(address friend) external onlyOwner returns(uint){
-        return dailyDaps[msg.sender][friends];
+        return dailyDaps[msg.sender][friend];
     }
 
     
 
-    function DailyRoll(address friend) public returns(){
+    function DailyRoll(address friend) public {
 
         
         if(!(timedOut[msg.sender][friend] && timedOut[friend][msg.sender])){
@@ -83,7 +83,10 @@ contract Dapz is Ownable, ERC20 {
         }
 
         else if (timedOut[msg.sender][friend] && timedOut[friend][msg.sender]){
-            if (_dayPassed(msg.sender, friend) && _dayPassed(friend, msg.sender)){  
+
+            bool nextDay = _dayPassed(msg.sender, friend);
+            bool nextDay_friend = _dayPassed(friend, msg.sender);
+            if (nextDay && nextDay_friend){  
                 _resetTimer(msg.sender, friend);
                 _dapRoll(msg.sender, friend);
 
@@ -96,7 +99,8 @@ contract Dapz is Ownable, ERC20 {
 
         else if(timedOut[msg.sender][friend]){
 
-            if( (_dayPassed(msg.sender, friend)){
+            bool nextDay = _dayPassed(msg.sender, friend);
+            if(nextDay){
                     
                 _dapRoll(msg.sender, friend);                
             }
