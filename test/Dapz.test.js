@@ -7,8 +7,8 @@ contract("Dapz", (accounts) => {
     })
 
     it("starts 1M", async () =>{
-        let balance = await dapz.balanceOf(accounts[0])
-        console.log(web3.utils.fromWei(balance), 'ether')
+      //  let balance = await dapz.balanceOf(accounts[0])
+      //  console.log(web3.utils.fromWei(balance), 'ether')
     })
 
 
