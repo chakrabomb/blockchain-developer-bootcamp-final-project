@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.0;
 
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract Dapz is ERC20 {
+contract Dapz is Ownable, ERC20 {
 
-    event Mint(address to);
+    event Bruh(address bruh1, address bruh2);
 
     uint difficulty;
     uint challenge;
@@ -14,8 +15,6 @@ contract Dapz is ERC20 {
     mapping(address => mapping(address=>uint)) public dailyDaps;
     mapping(address => mapping(address=>uint)) public lastDap; 
     mapping(address => mapping(address=>bool)) public timedOut;
-    mapping(address => mapping(address=>bool)) public doubleDown;
-    mapping(address => mapping(address=>bool)) public claimable;
 
 
     constructor() public ERC20("Dapz", "DAPZ") {
@@ -68,7 +67,7 @@ contract Dapz is ERC20 {
 
     
 
-    function firstDailyRoll(address friend) public returns(){
+    function DailyRoll(address friend) public returns(){
 
         
         if(!(timedOut[msg.sender][friend] && timedOut[friend][msg.sender])){
