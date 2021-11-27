@@ -65,8 +65,12 @@ contract Dapz is Ownable, ERC20 {
         timedOut[friend][sender] = false;
     }
 
-    function setChallenge() public onlyOwner {
+    function setChallenge() external onlyOwner {
         challenge = 100000000000;
+    }
+
+    function getRoll(address friend) external onlyOwner returns(uint){
+        return dailyDaps[msg.sender][friends];
     }
 
     
