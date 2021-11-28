@@ -41,6 +41,10 @@ contract Dapz is Ownable, ERC20 {
 
     }
 
+    function isTimedOut(address friend) public view returns(bool){
+        return timedOut[msg.sender][friend];
+    }
+
     function _checkChallengeAndMint(address sender, address friend) private{
         bool senderCheck = dailyDaps[sender][friend] < challenge;
         bool friendCheck = dailyDaps[friend][sender] < challenge;
