@@ -2,9 +2,9 @@
 
     - Inherits `ERC20` interface from openzeppelin's `ERC20.sol`
 
-    - Inherits `Ownable` interface from openzeppelin's `Ownable.sol`
+    - Inherits `Ownable` interface from openzeppelin's `Ownable.sol`\\
 
-\
+
 
 
 2. **Access Control Design Patterns:**
