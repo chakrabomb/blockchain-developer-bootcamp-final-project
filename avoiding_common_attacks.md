@@ -2,6 +2,7 @@
 
     - `pragma solidity 0.8.0;` specified compiler pragma for stability, prevent errors from using multiple compiler versions
 
+/
 
 2. **Proper use of `assert()`, `require()`, and `revert()`**
 
