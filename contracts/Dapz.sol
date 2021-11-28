@@ -46,17 +46,17 @@ contract Dapz is Ownable, ERC20 {
         bool friendCheck = dailyDaps[friend][sender] < challenge;
         
         if (senderCheck && friendCheck){
-            assert((_totalSupply + 2*3*dailyReward) <= maxSupply);
+           // assert((totalSupply + 2*3*dailyReward) <= maxSupply);
             _mint(sender, 3*dailyReward);
             _mint(friend, 3*dailyReward);
         }
         else if (senderCheck){
-            assert((_totalSupply + (3/2)*dailyReward) <= maxSupply);
+           // assert((totalSupply + uint((3/2)*dailyReward)) <= maxSupply);
             _mint(sender, dailyReward);
             _mint(friend, uint(dailyReward/2));
         }
         else if (friendCheck){
-            assert((_totalSupply + (3/2)*dailyReward) <= maxSupply);
+           // assert((totalSupply + uint((3/2)*dailyReward)) <= maxSupply);
             _mint(sender, uint(dailyReward/2));
             _mint(friend, dailyReward);
         }
