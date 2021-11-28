@@ -34,6 +34,10 @@ contract Dapz is Ownable, ERC20 {
         return difficulty;
     }
 
+    function getChallenge() public view returns (uint){
+        return challenge;
+    }
+
     function _dapRoll(address sender, address friend) private {
         lastDap[sender][friend] = block.timestamp;
         timedOut[sender][friend] = true;
@@ -77,8 +81,8 @@ contract Dapz is Ownable, ERC20 {
         timedOut[friend][sender] = false;
     }
 
-    function setChallenge() external onlyOwner {
-        challenge = 100000000000;
+    function setChallenge(uint newChallenge) external onlyOwner {
+        challenge = newChallenge;
     }
 
     function getRoll(address friend) external view onlyOwner returns(uint){
