@@ -174,6 +174,7 @@ contract Dapz is Ownable, ERC20 {
     
             _dapRoll(msg.sender, friend);
             _checkChallengeAndMint(msg.sender, friend);
+            emit Bruh(friend, msg.sender);
 
         }
 
