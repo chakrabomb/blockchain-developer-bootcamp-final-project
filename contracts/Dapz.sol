@@ -11,6 +11,7 @@ contract Dapz is Ownable, ERC20 {
     uint difficulty;
     uint challenge;
     uint dailyReward;
+    uint maxSupply;
 
     mapping(address => mapping(address=>uint)) private dailyDaps;
     mapping(address => mapping(address=>uint)) private lastDap; 
@@ -20,13 +21,17 @@ contract Dapz is Ownable, ERC20 {
     constructor() public ERC20("Dapz", "DAPZ") {
         difficulty = uint(keccak256(abi.encodePacked(block.difficulty % block.timestamp)))%10;
         
-        if(difficulty == 0){
+        if(difficulty > 0){
             difficulty = 1;
         }
         
         challenge = 10 ** difficulty;
         dailyReward = (10-difficulty) **2;
+        maxSupply = 1000000000000000;
 
+    }
+    function getDifficulty() public view returns (uint){
+        return difficulty;
     }
 
     function _dapRoll(address sender, address friend) private {
@@ -39,16 +44,19 @@ contract Dapz is Ownable, ERC20 {
     function _checkChallengeAndMint(address sender, address friend) private{
         bool senderCheck = dailyDaps[sender][friend] < challenge;
         bool friendCheck = dailyDaps[friend][sender] < challenge;
-
+        
         if (senderCheck && friendCheck){
+            assert((_totalSupply + 2*3*dailyReward) <= maxSupply);
             _mint(sender, 3*dailyReward);
             _mint(friend, 3*dailyReward);
         }
         else if (senderCheck){
+            assert((_totalSupply + (3/2)*dailyReward) <= maxSupply);
             _mint(sender, dailyReward);
             _mint(friend, uint(dailyReward/2));
         }
         else if (friendCheck){
+            assert((_totalSupply + (3/2)*dailyReward) <= maxSupply);
             _mint(sender, uint(dailyReward/2));
             _mint(friend, dailyReward);
         }
@@ -69,7 +77,7 @@ contract Dapz is Ownable, ERC20 {
         challenge = 100000000000;
     }
 
-    function getRoll(address friend) external onlyOwner returns(uint){
+    function getRoll(address friend) external view onlyOwner returns(uint){
         return dailyDaps[msg.sender][friend];
     }
 
