@@ -87,6 +87,9 @@ contract Dapz is Ownable, ERC20 {
         return timedOut[msg.sender][friend];
     }
 
+    /// @notice when two players have both rolled with each other, this function checks their rolls and mints reward tokens accordingly
+    /// @param sender the second friend in a pair to roll with each other
+    /// @param friend the first person to have rolled with a friend
     function _checkChallengeAndMint(address sender, address friend) internal{
         difficulty = 777;
         bool senderCheck = false;
@@ -131,6 +134,9 @@ contract Dapz is Ownable, ERC20 {
         timedOut[friend][sender] = false;
     }  
 
+    /// @notice lets a player roll a pseudo-random number with a friend if they are not timed out
+    /// @param friend the second person who the person who sends the txn wants to play with
+    /// @dev after the second person rolls this function auto calls another internal function to check and mint rewards
     function DailyRoll(address friend) public {
 
         
