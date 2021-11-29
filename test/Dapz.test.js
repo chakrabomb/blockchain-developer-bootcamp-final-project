@@ -11,9 +11,10 @@ contract("Dapz", (accounts) => {
       //with accounts[1] as a friend, after the roll it 
       //checks timedOut mapping to make sure they can't roll again if calling the function
       //at least until 24h passes
-      await dapz.DailyRoll(accounts[1], {from: accounts[0]})
-      let isTimedOut = await dapz.isTimedOut(accounts[1], {from: accounts[0]})
-      assert.equal(isTimedOut, true)
+
+      //await dapz.DailyRoll(accounts[1], {from: accounts[0]})
+      //let isTimedOut = await dapz.isTimedOut(accounts[1], {from: accounts[0]})
+      //assert.equal(isTimedOut, true)
             
     })
 
@@ -22,8 +23,51 @@ contract("Dapz", (accounts) => {
       await dapz.setChallenge(13, {from: accounts[0]})
       let newChallenge = await dapz.getChallenge({from: accounts[0]})
       assert.equal(newChallenge, 13)
+
+      //optionally check onlyOwner
+      //await dapz.setChallenge(420, {from: accounts[1]})
+      //let unsuccesfulChallenge = await dapz.getChallenge({from: accounts[0]})
+      //assert.equal(unsuccesfulChallenge, 13)
         
-})
+    })
+  
+    it("Reward two friends who both roll under the challenge w/ each other", async () =>{
+
+//      await dapz.setDifficulty(1, {from: accounts[0]})
+//      await dapz.setChallenge(1000000000000, {from: accounts[0]})
+
+//      await dapz.DailyRoll(accounts[1], {from: accounts[0]})      
+//      await dapz.DailyRoll(accounts[0], {from: accounts[1]})
+      
+//      let roll1 = await dapz.getRoll(accounts[0], {from: accounts[1]})
+//      let roll2 = await dapz.getRoll(accounts[1], {from: accounts[0]})
+
+//      let friend1Balance = await dapz.balanceOf(accounts[0])
+//      let friend2Balance = await dapz.balanceOf(accounts[1])
+      
+//      assert.equal(friend1Balance, 300)
+//      assert.equal(friend2Balance, 300)
+        
+    })
+
+    it("", async () =>{
+
+      //      await dapz.setDifficulty(1, {from: accounts[0]})
+      //      await dapz.setChallenge(1000000000000, {from: accounts[0]})
+      
+      //      await dapz.DailyRoll(accounts[1], {from: accounts[0]})      
+      //      await dapz.DailyRoll(accounts[0], {from: accounts[1]})
+            
+      //      let roll1 = await dapz.getRoll(accounts[0], {from: accounts[1]})
+      //      let roll2 = await dapz.getRoll(accounts[1], {from: accounts[0]})
+      
+      //      let friend1Balance = await dapz.balanceOf(accounts[0])
+      //      let friend2Balance = await dapz.balanceOf(accounts[1])
+            
+      //      assert.equal(friend1Balance, 300)
+      //      assert.equal(friend2Balance, 300)
+              
+          })
 
 
 

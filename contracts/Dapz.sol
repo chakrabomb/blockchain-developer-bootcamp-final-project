@@ -4,8 +4,13 @@ pragma solidity 0.8.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
+/// @title a game that lets friends try to roll a number below a challenge to earn tokens
+/// @author Krishna Sivapalan
 contract Dapz is Ownable, ERC20 {
 
+    /// @notice event for when two friends both roll under the challenge
+    /// @param bruh1 is the first out of two friends
+    /// @param bruh2 is the second out of two friends
     event Bruh(address bruh1, address bruh2);
 
     uint difficulty;
@@ -16,8 +21,6 @@ contract Dapz is Ownable, ERC20 {
     mapping(address => mapping(address=>uint)) private dailyDaps;
     mapping(address => mapping(address=>uint)) private lastDap; 
     mapping(address => mapping(address=>bool)) private timedOut;
-
-
     constructor() public ERC20("Dapz", "DAPZ") {
         difficulty = uint(keccak256(abi.encodePacked(block.difficulty % block.timestamp)))%10;
         
@@ -26,45 +29,92 @@ contract Dapz is Ownable, ERC20 {
         }
         
         challenge = 10 ** difficulty;
-        dailyReward = (10-difficulty) **2;
+        dailyReward = (11-difficulty) **2;
         maxSupply = 1000000000000000;
 
     }
+
+    /// @notice gets the current difficulty level
+    /// @return the current difficulty level
     function getDifficulty() public view returns (uint){
         return difficulty;
     }
+    
+    /// @notice allows the owner to set a new difficulty level and corresponding challenge
+    /// @dev use this for testing without having to rely on random difficulty value
+    /// @param newDifficulty the new difficulty level to set
+    function setDifficulty(uint newDifficulty) external onlyOwner {
+        require(difficulty>=1 && difficulty<=9);
+        difficulty = newDifficulty;
+        dailyReward = (11-difficulty) **2;
+        challenge = 10**difficulty;
+    }
 
+    /// @notice gets the current challenge number
+    /// @return returns the current challenge number
     function getChallenge() public view returns (uint){
         return challenge;
     }
 
-    function _dapRoll(address sender, address friend) private {
+    /// @notice allows the owner to set a new challenge number
+    /// @dev use this for testing without having to rely on random number challenges
+    /// @param newChallenge the new challenge number to set
+    function setChallenge(uint newChallenge) external onlyOwner {
+        challenge = newChallenge;
+    }
+
+    /// @notice allows a player to check their roll with a specific friend
+    /// @param the friend that the player rolled with
+    /// @return the value of their previous roll with that friend
+    function getRoll(address friend) public view returns(uint){
+        return dailyDaps[msg.sender][friend];
+    }
+
+    /// @dev an internal function to roll a new number for a player with a friend and store relevant values
+    /// @param sender the person who sent the transaction to execute a new roll
+    /// @param friend the friend who the roller is playing with
+    function _dapRoll(address sender, address friend) internal {
         lastDap[sender][friend] = block.timestamp;
         timedOut[sender][friend] = true;
         dailyDaps[sender][friend] = uint(keccak256(abi.encodePacked(sender,friend,block.timestamp))) % (10**10);
 
     }
 
+    /// @notice check if a person is timed out from rolling with a friend
+    /// @param friend the friend who the transaction sender is checking if they're timed out with
+    /// @return a bool of whether or not the sender is timed out w/ their friend
     function isTimedOut(address friend) public view returns(bool){
         return timedOut[msg.sender][friend];
     }
 
-    function _checkChallengeAndMint(address sender, address friend) private{
-        bool senderCheck = dailyDaps[sender][friend] < challenge;
-        bool friendCheck = dailyDaps[friend][sender] < challenge;
-        
+    function _checkChallengeAndMint(address sender, address friend) internal{
+        difficulty = 777;
+        bool senderCheck = false;
+        bool friendCheck = false;
+        uint currentSupply = totalSupply();
+
+        uint roll_1 = dailyDaps[sender][friend];
+        uint roll_2 = dailyDaps[friend][sender];
+
+        if(roll_1 < challenge){
+            senderCheck = true;
+        }
+        if(roll_2 < challenge){
+            friendCheck = true;
+        }
+
         if (senderCheck && friendCheck){
-            assert((totalSupply() + 2*3*dailyReward) <= maxSupply);
+            assert((currentSupply + 2*3*dailyReward) <= maxSupply);
             _mint(sender, 3*dailyReward);
             _mint(friend, 3*dailyReward);
         }
         else if (senderCheck){
-            assert((totalSupply() + dailyReward + uint(dailyReward/2)) <= maxSupply);
+            assert((currentSupply + dailyReward + uint(dailyReward/2)) <= maxSupply);
             _mint(sender, dailyReward);
             _mint(friend, uint(dailyReward/2));
         }
         else if (friendCheck){
-            assert((totalSupply() + dailyReward + uint(dailyReward/2)) <= maxSupply);
+            assert((currentSupply + dailyReward + uint(dailyReward/2)) <= maxSupply);
             _mint(sender, uint(dailyReward/2));
             _mint(friend, dailyReward);
         }
@@ -79,22 +129,12 @@ contract Dapz is Ownable, ERC20 {
     function _resetTimer(address sender, address friend) private {
         timedOut[sender][friend] = false;
         timedOut[friend][sender] = false;
-    }
-
-    function setChallenge(uint newChallenge) external onlyOwner {
-        challenge = newChallenge;
-    }
-
-    function getRoll(address friend) external view onlyOwner returns(uint){
-        return dailyDaps[msg.sender][friend];
-    }
-
-    
+    }  
 
     function DailyRoll(address friend) public {
 
         
-        if(!(timedOut[msg.sender][friend] && timedOut[friend][msg.sender])){
+        if(!timedOut[msg.sender][friend] && !timedOut[friend][msg.sender]){
             _dapRoll(msg.sender, friend);
         }
 
@@ -102,11 +142,10 @@ contract Dapz is Ownable, ERC20 {
 
             bool nextDay = _dayPassed(msg.sender, friend);
             bool nextDay_friend = _dayPassed(friend, msg.sender);
+            
             if (nextDay && nextDay_friend){  
                 _resetTimer(msg.sender, friend);
-                _dapRoll(msg.sender, friend);
-
-                
+                _dapRoll(msg.sender, friend);                
             }
             else {
                 revert();
@@ -116,9 +155,8 @@ contract Dapz is Ownable, ERC20 {
         else if(timedOut[msg.sender][friend]){
 
             bool nextDay = _dayPassed(msg.sender, friend);
-            if(nextDay){
-                    
-                _dapRoll(msg.sender, friend);                
+            if(nextDay){  
+                _dapRoll(msg.sender, friend);               
             }
             else {
                 revert();
@@ -127,10 +165,9 @@ contract Dapz is Ownable, ERC20 {
         else if((timedOut[friend][msg.sender])){
             // 1st partner has already rolled, call a function that lets 2nd
             // partner roll and double down with respect to 1st roll
+    
             _dapRoll(msg.sender, friend);
-
             _checkChallengeAndMint(msg.sender, friend);
-
 
         }
 
