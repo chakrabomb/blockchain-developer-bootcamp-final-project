@@ -52,22 +52,9 @@ contract("Dapz", (accounts) => {
 
     it("", async () =>{
 
-      //      await dapz.setDifficulty(1, {from: accounts[0]})
-      //      await dapz.setChallenge(1000000000000, {from: accounts[0]})
-      
-      //      await dapz.DailyRoll(accounts[1], {from: accounts[0]})      
-      //      await dapz.DailyRoll(accounts[0], {from: accounts[1]})
-            
-      //      let roll1 = await dapz.getRoll(accounts[0], {from: accounts[1]})
-      //      let roll2 = await dapz.getRoll(accounts[1], {from: accounts[0]})
-      
-      //      let friend1Balance = await dapz.balanceOf(accounts[0])
-      //      let friend2Balance = await dapz.balanceOf(accounts[1])
-            
-      //      assert.equal(friend1Balance, 300)
-      //      assert.equal(friend2Balance, 300)
+
               
-          })
+    })
 
 
 

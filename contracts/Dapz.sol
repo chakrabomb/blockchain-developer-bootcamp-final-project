@@ -64,7 +64,7 @@ contract Dapz is Ownable, ERC20 {
     }
 
     /// @notice allows a player to check their roll with a specific friend
-    /// @param the friend that the player rolled with
+    /// @param friend the friend that the player rolled with
     /// @return the value of their previous roll with that friend
     function getRoll(address friend) public view returns(uint){
         return dailyDaps[msg.sender][friend];
