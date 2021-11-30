@@ -21,7 +21,7 @@ contract Dapz is Ownable, ERC20 {
     mapping(address => mapping(address=>uint)) private dailyDaps;
     mapping(address => mapping(address=>uint)) private lastDap; 
     mapping(address => mapping(address=>bool)) private timedOut;
-    constructor() public ERC20("Dapz", "DAPZ") {
+    constructor() public ERC20("Dap-upz", "DAPZ") {
         difficulty = uint(keccak256(abi.encodePacked(block.difficulty % block.timestamp)))%10;
         
         if(difficulty > 0){
