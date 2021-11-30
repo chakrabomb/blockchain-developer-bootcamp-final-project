@@ -17,10 +17,10 @@ contract Dapz is Ownable, ERC20 {
     uint private challenge;
 
     /// @notice the base token reward amount on any given day
-    uint dailyReward;
+    uint public dailyReward;
 
     /// @notice the max supply of the token, set to 1 Quadrillion in constructor
-    uint maxSupply;
+    uint public maxSupply;
 
     mapping(address => mapping(address=>uint)) private dailyDaps;
     mapping(address => mapping(address=>uint)) private lastDap; 
