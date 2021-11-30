@@ -1,5 +1,7 @@
 # blockchain-developer-bootcamp-final-project
 
+## By: `0xD74DD9cCF3c319a56271A50D994B59f09d3Efaf6`
+
 ## Dap-upz ($DAPZ)
 
 Dap-upz is a game for anyone who has an Ethereum wallet. Dap-up your friends on-chain and have the chance to get token rewards in $DAPZ for rolling lower against a daily challenge number. Dap-up new people to have more chances to win every day and have the chance to become Bruhs if you both roll below the challenge. Everyday you and a friend can exchange wallet addresses and the smart-contract uses the two addresses together (w/ the date and time of the roll) to roll a pseudo-random number for each of you. Depending on the outcome of you and your friends rolls you each have the chance to win $DAPZ token rewards. 

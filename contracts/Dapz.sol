@@ -149,7 +149,6 @@ contract Dapz is Ownable, ERC20 {
         }
 
         else if (timedOut[msg.sender][friend] && timedOut[friend][msg.sender]){
-
             bool nextDay = _dayPassed(msg.sender, friend);
             bool nextDay_friend = _dayPassed(friend, msg.sender);
             
@@ -163,7 +162,6 @@ contract Dapz is Ownable, ERC20 {
         }
 
         else if(timedOut[msg.sender][friend]){
-
             bool nextDay = _dayPassed(msg.sender, friend);
             if(nextDay){  
                 _dapRoll(msg.sender, friend);               
@@ -172,10 +170,7 @@ contract Dapz is Ownable, ERC20 {
                 revert();
             }
         }
-        else if((timedOut[friend][msg.sender])){
-            // 1st partner has already rolled, call a function that lets 2nd
-            // partner roll and double down with respect to 1st roll
-    
+        else if((timedOut[friend][msg.sender])){    
             _dapRoll(msg.sender, friend);
             _checkChallengeAndMint(msg.sender, friend);
             emit Bruh(friend, msg.sender);
