@@ -13,9 +13,13 @@ contract Dapz is Ownable, ERC20 {
     /// @param bruh2 is the second out of two friends
     event Bruh(address bruh1, address bruh2);
 
-    uint difficulty;
-    uint challenge;
+    uint private difficulty;
+    uint private challenge;
+
+    /// @notice the base token reward amount on any given day
     uint dailyReward;
+
+    /// @notice the max supply of the token, set to 1 Quadrillion in constructor
     uint maxSupply;
 
     mapping(address => mapping(address=>uint)) private dailyDaps;
