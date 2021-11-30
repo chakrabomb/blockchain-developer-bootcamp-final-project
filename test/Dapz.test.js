@@ -1,22 +1,21 @@
 const Dapz = artifacts.require("Dapz")
 const truffleAssert = require('truffle-assertions')
+const {expectEvent} = require('@openzeppelin/test-helpers')
 
 contract("Dapz", (accounts) => {
 
-    before(async () => {
-        dapz = await Dapz.deployed()
+    beforeEach(async () => {
+        dapz = await Dapz.new()
+        assert.ok(dapz)
     })
 
     it("Time-out rolls w/ a friend for 24h after rolling w/ that friend", async () =>{
       //this test sends a daily roll from the deployer address
       //with accounts[1] as a friend, after the roll it 
-      //checks timedOut mapping to make sure they can't roll again if calling the function
-      //at least until 24h passes
-
-      //await dapz.DailyRoll(accounts[1], {from: accounts[0]})
-      //let isTimedOut = await dapz.isTimedOut(accounts[1], {from: accounts[0]})
-      //assert.equal(isTimedOut, true)
-            
+      //checks timedOut mapping to make sure they can't roll again right away
+      await dapz.DailyRoll(accounts[1], {from: accounts[0]})
+      let isTimedOut = await dapz.isTimedOut(accounts[1], {from: accounts[0]})
+      assert.equal(isTimedOut, true)           
     })
 
     it("Lets the owner set a new challenge number", async () =>{
@@ -28,31 +27,42 @@ contract("Dapz", (accounts) => {
     })
   
     it("Reward two friends who both roll under the challenge w/ each other", async () =>{
-
       //set the difficulty such that corresponding reward is 100
       //set the challenge to a high enough number that any roll is below it
       //therefore every roll should win with this challenge number
-//      await dapz.setDifficulty(1, {from: accounts[0]})
-//      await dapz.setChallenge(1000000000000, {from: accounts[0]})
+      await dapz.setDifficulty(1, {from: accounts[0]})
+      await dapz.setChallenge(1000000000000, {from: accounts[0]})
 
       //a pair of friends each roll with each other
-//      await dapz.DailyRoll(accounts[1], {from: accounts[0]})      
-//      await dapz.DailyRoll(accounts[0], {from: accounts[1]})
+      await dapz.DailyRoll(accounts[1], {from: accounts[0]})      
+      await dapz.DailyRoll(accounts[0], {from: accounts[1]})
 
       //each friend should have a balance of 300 for both winning the challenge
-//      let friend1Balance = await dapz.balanceOf(accounts[0])
-//      let friend2Balance = await dapz.balanceOf(accounts[1])      
-//      assert.equal(friend1Balance, 300)
-//      assert.equal(friend2Balance, 300)
-        
+      let friend1Balance = await dapz.balanceOf(accounts[0])
+      let friend2Balance = await dapz.balanceOf(accounts[1])      
+      assert.equal(friend1Balance, 300)
+      assert.equal(friend2Balance, 300)       
     })
 
     it("Reverts when someone tries to roll twice w/o 24h delay", async () =>{
       //call DailyRoll() twice with the same ms.sender and same friend
       //second roll should revert because timeOut period is active
       await dapz.DailyRoll(accounts[1], {from: accounts[0]})      
-      await truffleAssert.reverts(dapz.DailyRoll(accounts[1], {from: accounts[0]}))
-           
+      await truffleAssert.reverts(dapz.DailyRoll(accounts[1], {from: accounts[0]}))          
+    })
+
+    it("Emit Bruh event when two friends roll below the challenge together", async () =>{
+      //set the difficulty such that corresponding reward is 100
+      //set the challenge to a high enough number that any roll is below it
+      //therefore every roll should win with this challenge number
+      await dapz.setDifficulty(1, {from: accounts[0]})
+      await dapz.setChallenge(1000000000000, {from: accounts[0]})
+
+      //a pair of friends each roll with each other
+      //check for emitted 'Bruh" event with addresses of both friends as event arguments
+      await dapz.DailyRoll(accounts[1], {from: accounts[0]})      
+      const {logs} = await dapz.DailyRoll(accounts[0], {from: accounts[1]});
+      expectEvent.inLogs(logs, 'Bruh', {bruh1: accounts[0], bruh2: accounts[1]})
     })
 
 
