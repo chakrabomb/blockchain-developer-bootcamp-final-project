@@ -50,8 +50,13 @@ contract("Dapz", (accounts) => {
         
     })
 
-    it("", async () =>{
+    it("breh", async () =>{
 
+      await dapz.setDifficulty(1, {from: accounts[0]})
+      await dapz.setChallenge(1000000000000, {from: accounts[0]})
+      await dapz.DailyRoll(accounts[1], {from: accounts[0]})      
+      //await catchRevert(dapz.DailyRoll(accounts[0], {from: accounts[1]}))
+   
 
               
     })
