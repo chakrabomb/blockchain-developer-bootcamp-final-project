@@ -25,3 +25,4 @@ The reward for beating the challenge varies quadratically with the difficulty so
 3. `npm install --save-dev @openzeppelin/test-helpers` (used in Dapz.test.js)
 4. `npm install @truffle/hdwallet-provider`
 5. `npm install dotenv`
+6. `npm install web3`
