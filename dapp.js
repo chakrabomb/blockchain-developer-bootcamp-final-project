@@ -517,6 +517,7 @@ window.addEventListener('load', function() {
                   var web3 = new Web3(window.ethereum);
                   const dapz = new web3.eth.Contract(dapzABI, dapzAddress);
                   dapz.setProvider(window.ethereum);
+                  await dapz.methods.DailyRoll(addrInput).send({from: ethereum.selectedAddress});
 
 
                 }
