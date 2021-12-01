@@ -1,7 +1,20 @@
 # blockchain-developer-bootcamp-final-project
 
-## (https://krish-13.github.io/blockchain-developer-bootcamp-final-project)[https://krish-13.github.io/blockchain-developer-bootcamp-final-project]
+## link: https://krish-13.github.io/blockchain-developer-bootcamp-final-project
 ## By: `0xdec386dec394Ca54CCb5d036de158265180b87ec`
+
+## Installing Dependancies
+
+1. `npm install @openzepellin/contracts` (used in Dapz.sol smart contract)
+2. `npm install truffle-assertions` (used in Dapz.test.js)
+3. `npm install --save-dev @openzeppelin/test-helpers` (used in Dapz.test.js)
+4. `npm install @truffle/hdwallet-provider`
+5. `npm install dotenv`
+6. `npm install web3`
+
+# .env file
+`SEED = "YOUR_MNEMONIC_SEED_PHRASE
+INFURA = 'https://ropsten.infura.io/v3/YOUR_INFURA_API_KEY'`
 
 ## Dap-upz ($DAPZ)
 
@@ -19,11 +32,4 @@ The game will have a randomly adjusted difficulty of the challenge every day. Th
 
 The reward for beating the challenge varies quadratically with the difficulty so players who win more difficult challenges get much higher rewards without creating any exponential inflation of the token. Up to 1 Quadrillion tokens can be rewarded `#shibarmy`. If two players beat the challenge together they each get rewarded three times the reward on that day `#(3,3)` and emit a `Bruh()` event on-chain to declare their victory! If one player in a pair beats the challenge then he gets rewarded the regular reward amount corresponding to that days difficulty, and the other player gets half the amount. If both players bust, better luck next time!
 
-## Installing Dependancies
 
-1. `npm install @openzepellin/contracts` (used in Dapz.sol smart contract)
-2. `npm install truffle-assertions` (used in Dapz.test.js)
-3. `npm install --save-dev @openzeppelin/test-helpers` (used in Dapz.test.js)
-4. `npm install @truffle/hdwallet-provider`
-5. `npm install dotenv`
-6. `npm install web3`
