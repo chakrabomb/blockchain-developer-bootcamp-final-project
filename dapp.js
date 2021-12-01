@@ -507,20 +507,28 @@ window.addEventListener('load', function() {
         mmConnect.onclick = async () => {
             await ethereum.request({method: 'eth_requestAccounts'})
             if(window.ethereum.chainId == '0x3'){
-                mmConnect.parentNode.removeChild(mmConnect)
-                mmDetected.innerHTML = "Metamask connected to Ropsten"
-                console.log("Metamask connected to Ropsten")
-                setTimeout(function(){mmDetected.parentNode.removeChild(mmDetected)}, 3000);
-                const submit = document.getElementById("submit");
-                submit.onclick = async () => {
-                  const addrInput = document.getElementById("addrInput").value;
-                  var web3 = new Web3(window.ethereum);
-                  const dapz = new web3.eth.Contract(dapzABI, dapzAddress);
-                  dapz.setProvider(window.ethereum);
-                  await dapz.methods.DailyRoll(addrInput).send({from: ethereum.selectedAddress});
+              var web3 = new Web3(window.ethereum);
+              const dapz = new web3.eth.Contract(dapzABI, dapzAddress);
+              dapz.setProvider(window.ethereum);
+              
+              mmConnect.parentNode.removeChild(mmConnect)
+              mmDetected.innerHTML = "Metamask connected to Ropsten"
+              console.log("Metamask connected to Ropsten")
+              setTimeout(function(){mmDetected.parentNode.removeChild(mmDetected)}, 3000);
+              const submit = document.getElementById("submit");
+              submit.onclick = async () => {
+                const addrInput = document.getElementById("addrInput1").value;
+                await dapz.methods.DailyRoll(addrInput1).send({from: ethereum.selectedAddress});
+              }
+              const getRoll = document.getElementById("getRoll");
+              getRoll.onclick = async () => {
+                const addrInput2 = document.getElementById("addrInput2").value;
+                var roll = await dapz.methods.getRoll(addrInput2).send({from: ethereum.selectedAddress});
+                const result = document.getElementById("result");
+                result.innerHTML = roll;
+              }
+                
 
-
-                }
             }
 
             else{
