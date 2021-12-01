@@ -53,4 +53,4 @@ The game will have a randomly adjusted difficulty of the challenge every day. Th
 
 The reward for beating the challenge varies quadratically with the difficulty so players who win more difficult challenges get much higher rewards without creating any exponential inflation of the token. Up to 1 Quadrillion tokens can be rewarded `#shibarmy`. If two players beat the challenge together they each get rewarded three times the reward on that day `#(3,3)` and emit a `Bruh()` event on-chain to declare their victory! If one player in a pair beats the challenge then he gets rewarded the regular reward amount corresponding to that days difficulty, and the other player gets half the amount. If both players bust, better luck next time!
 
-![kaiji san!](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.mangasail.co%2Fcontent%2Ftobaku-hakairoku-kaiji-2&psig=AOvVaw1xgZc5FPqL6SIl67D7-XH2&ust=1638428587474000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCNi16qWEwvQCFQAAAAAdAAAAABAE)
+![kaiji san!](https://cdn1.mangasail.net/sites/default/files/manga/2/186431//20160630051740672.jpg)
