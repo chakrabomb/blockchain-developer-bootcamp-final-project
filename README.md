@@ -23,6 +23,7 @@
 Uncomment the "developer" network in `truffle-config.js`, use port 8545
 
 Run:
+
     $ truffle develop
 
     truffle(develop)> truffle test
