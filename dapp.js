@@ -1,3 +1,4 @@
+
 window.addEventListener('load', function() {
     if(typeof window.ethereum !== 'undefined'){
         console.log("Metamask detected")
@@ -10,7 +11,8 @@ window.addEventListener('load', function() {
                 mmConnect.parentNode.removeChild(mmConnect)
                 mmDetected.innerHTML = "Metamask connected to Ropsten"
                 console.log("Metamask connected to Ropsten")
-                setTimeout(function(){mmDetected.parentNode.removeChild(mmDetected)}, 3000)
+                setTimeout(function(){mmDetected.parentNode.removeChild(mmDetected)}, 3000);
+                const addrInput = document.getElementById("addrInput");
             }
 
             else{
