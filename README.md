@@ -34,7 +34,9 @@ Run:
 
 ### Directory Structure
 
-The structure is a basic truffle suite project with npm installed. No frameworks are used. There are 2 smart contracts in ./contracts - Migrations.sol, and Dapz.sol which is the main contract. The contract itself only uses two interfaces from the ./node_modules/@openzeppelin/contracts/ namely Ownable.sol and ERC20.sol (as well as all of its inheritences e.g. IERC20.sol etc.), and the rest of the modules are either used in the test file, or in the frontend files which are index.html and dapp.js. There are also the .json artifacts from deploying the two contracts to Ropsten Testnet located in ./build/contracts/
+The structure is a basic truffle suite project with npm installed. No frameworks are used. 
+
+There are 2 smart contracts in ./contracts - Migrations.sol, and Dapz.sol which is the main contract. The contract itself only uses two interfaces from the ./node_modules/@openzeppelin/contracts/ namely Ownable.sol and ERC20.sol (as well as all of its inheritences e.g. IERC20.sol etc.), and the rest of the modules are either used in the test file, or in the frontend files which are index.html and dapp.js. There are also the .json artifacts from deploying the two contracts to Ropsten Testnet located in ./build/contracts/
 ## Dap-upz ($DAPZ)
 
 Dap-upz is a game for anyone who has an Ethereum wallet. Dap-up your friends on-chain and have the chance to get token rewards in $DAPZ for rolling lower against a daily challenge number. Dap-up new people to have more chances to win every day and have the chance to become Bruhs if you both roll below the challenge. Everyday you and a friend can exchange wallet addresses and the smart-contract uses the two addresses together (w/ the date and time of the roll) to roll a pseudo-random number for each of you. Depending on the outcome of you and your friends rolls you each have the chance to win $DAPZ token rewards. 
