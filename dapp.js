@@ -491,10 +491,7 @@ const dapzABI = [
     }
   ]
 
-var Web3 = require('web3');
-var Web3 = new Web3(window.ethereum);
-web3.eth.defaultaccounts = web3.eth.accounts[0]
-var dapz = web3.eth.contract(JSON.parse(dapzABI)).at(dapzAddress);
+
 window.addEventListener('load', function() {
     if(typeof window.ethereum !== 'undefined'){
         console.log("Metamask detected")
@@ -506,9 +503,9 @@ window.addEventListener('load', function() {
             if(window.ethereum.chainId == '0x3'){
               
               
-              //var web3 = new Web3(window.ethereum);
-              //var dapz = new web3.eth.Contract(dapzABI, dapzAddress);
-              //dapz.setProvider(window.ethereum);
+              var web3 = new Web3(window.ethereum);
+              var dapz = new web3.eth.Contract(dapzABI, dapzAddress);
+              dapz.setProvider(window.ethereum);
               
               mmConnect.parentNode.removeChild(mmConnect)
               mmDetected.innerHTML = "Metamask connected to Ropsten"
