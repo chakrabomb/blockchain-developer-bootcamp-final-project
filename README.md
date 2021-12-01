@@ -6,10 +6,10 @@
 ### Prerequisites & Dependancies
 
     $ npm -v
-    `8.1.3`
+    8.1.3
 
     $ node -v
-    `v16.13.0`
+    v16.13.0
 
     npm install @openzepellin/contracts 
     npm install truffle-assertions 
@@ -17,6 +17,15 @@
     npm install @truffle/hdwallet-provider
     npm install dotenv
     npm install web3
+
+### Running the Unit Tests
+
+Uncomment the "developer" network in `truffle-config.js`, use port 8545
+
+Run:
+    $ truffle develop
+
+    truffle(develop)> truffle test
 
 ## .env file
     SEED = "YOUR_MNEMONIC_SEED_PHRASE"
