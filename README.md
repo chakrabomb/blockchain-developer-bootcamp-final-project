@@ -10,7 +10,7 @@ https://krish-13.github.io/blockchain-developer-bootcamp-final-project
 ## Walkthrough:
 https://drive.google.com/file/d/1yGKLKCyphz6TsoCoG1TPDjQR06RzrQPc/view?usp=sharing
 
-(After I recorded this I added a text notification to the frontend that pops up once the transaction is mined, its not shown in the video)
+(Note: After I recorded this I added a text notification to the frontend that pops up once the transaction is mined, its not shown in the video)
 
 
 ## Prerequisites & Dependancies:
