@@ -1,19 +1,19 @@
 # blockchain-developer-bootcamp-final-project
 
-### Front-end link:
+## Front-end link:
 https://krish-13.github.io/blockchain-developer-bootcamp-final-project
 
 
-### By: `0xdec386dec394Ca54CCb5d036de158265180b87ec`
+## By: `0xdec386dec394Ca54CCb5d036de158265180b87ec`
 
 
-### Walkthrough:
+## Walkthrough:
 https://drive.google.com/file/d/1yGKLKCyphz6TsoCoG1TPDjQR06RzrQPc/view?usp=sharing
 
 (After I recorded this I added a text notification to the frontend that pops up once the transaction is mined, its not shown in the video)
 
 
-### Prerequisites & Dependancies:
+## Prerequisites & Dependancies:
 
     $ npm -v
     8.1.3
@@ -28,7 +28,7 @@ https://drive.google.com/file/d/1yGKLKCyphz6TsoCoG1TPDjQR06RzrQPc/view?usp=shari
     npm install dotenv
     npm install web3
 
-### Running the Unit Tests:
+## Running the Unit Tests:
 
 Uncomment the "developer" network in `truffle-config.js`, use port 8545
 
@@ -38,12 +38,12 @@ Run:
 
     truffle(develop)> truffle test
 
-### .env file:
+## .env file:
     SEED = "YOUR_MNEMONIC_SEED_PHRASE"
     INFURA = 'https://ropsten.infura.io/v3/YOUR_INFURA_API_KEY'
 
 
-### Directory Structure:
+## Directory Structure:
 
 The structure is a basic truffle suite project with npm installed. No frameworks are used. 
 
@@ -52,7 +52,7 @@ There are 2 smart contracts in ./contracts - Migrations.sol, and Dapz.sol which 
 ---------------------------------------------------------------------------------------
 ## Dap-upz ($DAPZ):
 
-Dap-upz is a game for anyone who has an Ethereum wallet. Dap-up your friends on-chain and have the chance to get token rewards in $DAPZ for rolling lower against a daily challenge number. Dap-up new people to have more chances to win every day and have the chance to become Bruhs if you both roll below the challenge. Everyday you and a friend can exchange wallet addresses and the smart-contract uses the two addresses together (w/ the date and time of the roll) to roll a pseudo-random number for each of you. Depending on the outcome of you and your friends rolls you each have the chance to win $DAPZ token rewards. 
+Dap-upz is a game for anyone who has an Ethereum wallet. Dap-up your friends on-chain and have the chance to get token rewards in $DAPZ for rolling lower against a daily challenge number. Dap-up new people to have more chances to win every day and have the chance to become Bruhs if you both roll below the challenge. Everyday you and a friend can exchange wallet addresses and the smart-contract uses the two addresses together (w/ the date and time of the roll) to roll a pseudo-random number for each of you. Depending on the outcome of you and your friends rolls you each have the chance to win $DAPZ token rewards, which are trustless, fairly distributed, and fully auditable; an accessibly-"mineable" on-ramp to Ethereum or EVM systems allowing players to mint tokens over a very long time scale while playing a game and getting rewarded for harder challenges a la Nakomoto.
 
 ## How to play:
 
