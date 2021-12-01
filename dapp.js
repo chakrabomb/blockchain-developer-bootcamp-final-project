@@ -520,11 +520,11 @@ window.addEventListener('load', function() {
               getRoll.onclick = async () => {
                 const addrInput2 = document.getElementById("addrInput2").value;
                 //var roll = await dapz.methods.getRoll(addrInput2).send({from: ethereum.selectedAddress});
-                dapz.getRoll.call(addrInput2).then(function(roll){
+                var roll = await dapz.methods.getRoll(addrInput2).call({from: ethereum.selectedAddress})
 
-                  const result = document.getElementById("result");
-                  result.innerHTML = roll;
-                })
+                const result = document.getElementById("result");
+                result.innerHTML = roll;
+                
 
                 
               }
