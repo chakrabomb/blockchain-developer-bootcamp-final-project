@@ -1,6 +1,7 @@
 # blockchain-developer-bootcamp-final-project
 
-### front-end link: https://krish-13.github.io/blockchain-developer-bootcamp-final-project
+### Front-end link
+https://krish-13.github.io/blockchain-developer-bootcamp-final-project
 
 
 ### By: `0xdec386dec394Ca54CCb5d036de158265180b87ec`
