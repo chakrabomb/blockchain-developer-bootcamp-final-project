@@ -513,7 +513,13 @@ window.addEventListener('load', function() {
               const submit = document.getElementById("submit");
               submit.onclick = async () => {
                 const addrInput1 = document.getElementById("addrInput1").value;
-                await dapz.methods.DailyRoll(addrInput1).send({from: ethereum.selectedAddress});
+                var sendtxn = await dapz.methods.DailyRoll(addrInput1).send({from: ethereum.selectedAddress});
+                const check = await web3.eth.getTransactionReceipt(sendtxn.transactionHash)
+                if(check){
+                  const checker = document.getElementById("checker")
+                  checker.innerHTML = "Your Roll has been mined"
+
+                }
               }
               const getRoll = document.getElementById("getRoll");
               getRoll.onclick = async () => {
