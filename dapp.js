@@ -1,5 +1,3 @@
-console.log("breh")
-
 window.addEventListener('load', function() {
     if(typeof window.ethereum !== 'undefined'){
         console.log("Metamask detected")
@@ -33,3 +31,5 @@ window.addEventListener('load', function() {
         mmConnect.parentNode.removeChild(mmConnect)
     }
 })
+
+const dapzAddress = 0xe648af2cA75A49bB7826813A6E2F59e1e5FFfC60;
