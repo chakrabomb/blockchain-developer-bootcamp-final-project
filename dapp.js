@@ -1,4 +1,4 @@
-const dapzAddress = 0xe648af2cA75A49bB7826813A6E2F59e1e5FFfC60;
+const dapzAddress = '0xe648af2cA75A49bB7826813A6E2F59e1e5FFfC60';
 
 const dapzABI = [
     {
@@ -491,6 +491,13 @@ const dapzABI = [
     }
   ]
 
+//var script = document.createElement('script');
+//script.type = 'text/javascript';
+//script.source = 'script.js';
+//script.source = 'https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js';
+//document.head.appendChild(script);
+
+
 window.addEventListener('load', function() {
     if(typeof window.ethereum !== 'undefined'){
         console.log("Metamask detected")
@@ -507,7 +514,9 @@ window.addEventListener('load', function() {
                 const submit = document.getElementById("submit");
                 submit.onclick = async () => {
                   const addrInput = document.getElementById("addrInput").value;
-                  console.log(addrInput)
+                  var web3 = new Web3(window.ethereum);
+                  const dapz = new web3.eth.Contract(dapzABI, dapzAddress);
+                  dapz.setProvider(window.ethereum);
 
 
                 }
