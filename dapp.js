@@ -491,13 +491,10 @@ const dapzABI = [
     }
   ]
 
-//var script = document.createElement('script');
-//script.type = 'text/javascript';
-//script.source = 'script.js';
-//script.source = 'https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js';
-//document.head.appendChild(script);
-
-
+var Web3 = require('web3');
+var Web3 = new Web3(window.ethereum);
+web3.eth.defaultaccounts = web3.eth.accounts[0]
+var dapz = web3.eth.contract(JSON.parse(dapzABI)).at(dapzAddress);
 window.addEventListener('load', function() {
     if(typeof window.ethereum !== 'undefined'){
         console.log("Metamask detected")
@@ -507,9 +504,11 @@ window.addEventListener('load', function() {
         mmConnect.onclick = async () => {
             await ethereum.request({method: 'eth_requestAccounts'})
             if(window.ethereum.chainId == '0x3'){
-              var web3 = new Web3(window.ethereum);
-              const dapz = new web3.eth.Contract(dapzABI, dapzAddress);
-              dapz.setProvider(window.ethereum);
+              
+              
+              //var web3 = new Web3(window.ethereum);
+              //var dapz = new web3.eth.Contract(dapzABI, dapzAddress);
+              //dapz.setProvider(window.ethereum);
               
               mmConnect.parentNode.removeChild(mmConnect)
               mmDetected.innerHTML = "Metamask connected to Ropsten"
@@ -517,15 +516,20 @@ window.addEventListener('load', function() {
               setTimeout(function(){mmDetected.parentNode.removeChild(mmDetected)}, 3000);
               const submit = document.getElementById("submit");
               submit.onclick = async () => {
-                const addrInput = document.getElementById("addrInput1").value;
+                const addrInput1 = document.getElementById("addrInput1").value;
                 await dapz.methods.DailyRoll(addrInput1).send({from: ethereum.selectedAddress});
               }
               const getRoll = document.getElementById("getRoll");
               getRoll.onclick = async () => {
                 const addrInput2 = document.getElementById("addrInput2").value;
-                var roll = await dapz.methods.getRoll(addrInput2).send({from: ethereum.selectedAddress});
-                const result = document.getElementById("result");
-                result.innerHTML = roll;
+                //var roll = await dapz.methods.getRoll(addrInput2).send({from: ethereum.selectedAddress});
+                dapz.getRoll.call(addrInput2).then(function(roll){
+
+                  const result = document.getElementById("result");
+                  result.innerHTML = roll;
+                })
+
+                
               }
                 
 
