@@ -13,10 +13,8 @@
 6. `npm install web3`
 
 # .env file
-`SEED = "YOUR_MNEMONIC_SEED_PHRASE
-
-
-INFURA = 'https://ropsten.infura.io/v3/YOUR_INFURA_API_KEY'`
+    SEED = "YOUR_MNEMONIC_SEED_PHRASE
+    INFURA = 'https://ropsten.infura.io/v3/YOUR_INFURA_API_KEY'
 
 ## Dap-upz ($DAPZ)
 
