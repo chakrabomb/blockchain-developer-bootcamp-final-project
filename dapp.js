@@ -502,7 +502,6 @@ window.addEventListener('load', function() {
             await ethereum.request({method: 'eth_requestAccounts'})
             if(window.ethereum.chainId == '0x3'){
               
-              
               var web3 = new Web3(window.ethereum);
               var dapz = new web3.eth.Contract(dapzABI, dapzAddress);
               dapz.setProvider(window.ethereum);
@@ -519,17 +518,12 @@ window.addEventListener('load', function() {
               const getRoll = document.getElementById("getRoll");
               getRoll.onclick = async () => {
                 const addrInput2 = document.getElementById("addrInput2").value;
-                //var roll = await dapz.methods.getRoll(addrInput2).send({from: ethereum.selectedAddress});
                 var roll = await dapz.methods.getRoll(addrInput2).call({from: ethereum.selectedAddress})
-
                 const result = document.getElementById("result");
                 result.innerHTML = roll;
-                
-
-                
+            
               }
                 
-
             }
 
             else{
