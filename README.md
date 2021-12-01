@@ -1,6 +1,7 @@
 # blockchain-developer-bootcamp-final-project
 
-## By: `0xD74DD9cCF3c319a56271A50D994B59f09d3Efaf6`
+## (https://krish-13.github.io/blockchain-developer-bootcamp-final-project)[https://krish-13.github.io/blockchain-developer-bootcamp-final-project]
+## By: `0xdec386dec394Ca54CCb5d036de158265180b87ec`
 
 ## Dap-upz ($DAPZ)
 
