@@ -1,39 +1,3 @@
-
-window.addEventListener('load', function() {
-    if(typeof window.ethereum !== 'undefined'){
-        console.log("Metamask detected")
-        let mmDetected = document.getElementById("mm-detected")
-        mmDetected.innerHTML = "Metamask detected"
-        const mmConnect = document.getElementById("mm-connect")
-        mmConnect.onclick = async () => {
-            await ethereum.request({method: 'eth_requestAccounts'})
-            if(window.ethereum.chainId == '0x3'){
-                mmConnect.parentNode.removeChild(mmConnect)
-                mmDetected.innerHTML = "Metamask connected to Ropsten"
-                console.log("Metamask connected to Ropsten")
-                setTimeout(function(){mmDetected.parentNode.removeChild(mmDetected)}, 3000);
-                const addrInput = document.getElementById("addrInput");
-            }
-
-            else{
-                mmDetected.innerHTML = "Wrong network, switch to Ropsten and try again"
-                console.log("Wrong network, switch to Ropsten and try again")
-            }
-            
-            
-        }
-    
-    
-    }
-    else{
-        let mmDetected = document.getElementById("mm-detected")
-        mmDetected.innerHTML = "Metamask not detected, log in to Metamask and refresh"
-        alert("Metamask not detected. Log in to Metamask and connect to Ropsten, then refresh")
-        const mmConnect = document.getElementById("mm-connect")
-        mmConnect.parentNode.removeChild(mmConnect)
-    }
-})
-
 const dapzAddress = 0xe648af2cA75A49bB7826813A6E2F59e1e5FFfC60;
 
 const dapzABI = [
@@ -526,3 +490,45 @@ const dapzABI = [
       "type": "function"
     }
   ]
+
+window.addEventListener('load', function() {
+    if(typeof window.ethereum !== 'undefined'){
+        console.log("Metamask detected")
+        let mmDetected = document.getElementById("mm-detected")
+        mmDetected.innerHTML = "Metamask detected"
+        const mmConnect = document.getElementById("mm-connect")
+        mmConnect.onclick = async () => {
+            await ethereum.request({method: 'eth_requestAccounts'})
+            if(window.ethereum.chainId == '0x3'){
+                mmConnect.parentNode.removeChild(mmConnect)
+                mmDetected.innerHTML = "Metamask connected to Ropsten"
+                console.log("Metamask connected to Ropsten")
+                setTimeout(function(){mmDetected.parentNode.removeChild(mmDetected)}, 3000);
+                const submit = document.getElementById("submit");
+                submit.onclick = async () => {
+                  const addrInput = document.getElementById("addrInput").value;
+                  console.log(addrInput)
+
+
+                }
+            }
+
+            else{
+                mmDetected.innerHTML = "Wrong network, switch to Ropsten and try again"
+                console.log("Wrong network, switch to Ropsten and try again")
+            }
+            
+            
+        }
+    
+    
+    }
+    else{
+        let mmDetected = document.getElementById("mm-detected")
+        mmDetected.innerHTML = "Metamask not detected, log in to Metamask and refresh"
+        alert("Metamask not detected. Log in to Metamask and connect to Ropsten, then refresh")
+        const mmConnect = document.getElementById("mm-connect")
+        mmConnect.parentNode.removeChild(mmConnect)
+    }
+})
+
