@@ -144,7 +144,7 @@ contract Dapz is Ownable, ERC20 {
         dailyReward = ((10-difficulty) ** 2) * 10;
         
         require((totalSupply() + uint(dailyReward/10))<=maxSupply);
-        _mint(sender, dailyReward/10);   
+        _mint(sender, uint(dailyReward/10));   
     }
 
     function _resetTimer(address sender, address friend) private {
