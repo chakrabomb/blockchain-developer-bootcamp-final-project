@@ -28,14 +28,9 @@ contract Dapz is Ownable, ERC20 {
     constructor() public ERC20("Dap-upz", "DAPZ") {
         difficulty = uint(keccak256(abi.encodePacked(block.difficulty % block.timestamp)))%10;
         
-        if(difficulty > 0){
-            difficulty = 1;
-        }
-        
-        challenge = 10 ** difficulty;
-        dailyReward = (11-difficulty) **2;
+        challenge = 2 ** (difficulty+1);
+        dailyReward = ((10-difficulty) ** 2) * 10;
         maxSupply = 1000000000000000;
-
     }
 
     /// @notice gets the current difficulty level
@@ -80,7 +75,7 @@ contract Dapz is Ownable, ERC20 {
     function _dapRoll(address sender, address friend) internal {
         lastDap[sender][friend] = block.timestamp;
         timedOut[sender][friend] = true;
-        dailyDaps[sender][friend] = uint(keccak256(abi.encodePacked(sender,friend,block.timestamp))) % (10**10);
+        dailyDaps[sender][friend] = uint(keccak256(abi.encodePacked(sender,friend,block.timestamp))) % (2**10);
 
     }
 
@@ -95,7 +90,7 @@ contract Dapz is Ownable, ERC20 {
     /// @param sender the second friend in a pair to roll with each other
     /// @param friend the first person to have rolled with a friend
     function _checkChallengeAndMint(address sender, address friend) internal{
-        difficulty = 777;
+    
         bool senderCheck = false;
         bool friendCheck = false;
         uint currentSupply = totalSupply();
@@ -114,6 +109,7 @@ contract Dapz is Ownable, ERC20 {
             assert((currentSupply + 2*3*dailyReward) <= maxSupply);
             _mint(sender, 3*dailyReward);
             _mint(friend, 3*dailyReward);
+            emit Bruh(friend, sender);
         }
         else if (senderCheck){
             assert((currentSupply + dailyReward + uint(dailyReward/2)) <= maxSupply);
@@ -142,7 +138,6 @@ contract Dapz is Ownable, ERC20 {
     /// @param friend the second person who the person who sends the txn wants to play with
     /// @dev after the second person rolls this function auto calls another internal function to check and mint rewards
     function DailyRoll(address friend) public {
-
         
         if(!timedOut[msg.sender][friend] && !timedOut[friend][msg.sender]){
             _dapRoll(msg.sender, friend);
@@ -173,17 +168,6 @@ contract Dapz is Ownable, ERC20 {
         else if((timedOut[friend][msg.sender])){    
             _dapRoll(msg.sender, friend);
             _checkChallengeAndMint(msg.sender, friend);
-            emit Bruh(friend, msg.sender);
-
         }
-
-
-
-
-
-
-
-    }
-
-    
+    }    
 }
