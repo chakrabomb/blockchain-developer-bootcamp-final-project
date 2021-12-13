@@ -21,16 +21,20 @@ contract Dapz is Ownable, ERC20 {
 
     /// @notice the max supply of the token, set to 1 Quadrillion in constructor
     uint public maxSupply;
+    
+    uint public lastDay;
 
     mapping(address => mapping(address=>uint)) private dailyDaps;
     mapping(address => mapping(address=>uint)) private lastDap; 
     mapping(address => mapping(address=>bool)) private timedOut;
+    
     constructor() public ERC20("Dap-upz", "DAPZ") {
         difficulty = uint(keccak256(abi.encodePacked(block.difficulty % block.timestamp)))%10;
         
         challenge = 2 ** (difficulty+1);
         dailyReward = ((10-difficulty) ** 2) * 10;
         maxSupply = 1000000000000000;
+        lastDay = block.timestamp;
     }
 
     /// @notice gets the current difficulty level
@@ -75,7 +79,7 @@ contract Dapz is Ownable, ERC20 {
     function _dapRoll(address sender, address friend) internal {
         lastDap[sender][friend] = block.timestamp;
         timedOut[sender][friend] = true;
-        dailyDaps[sender][friend] = uint(keccak256(abi.encodePacked(sender,friend,block.timestamp))) % (2**10);
+        dailyDaps[sender][friend] = uint(keccak256(abi.encodePacked(sender,friend,block.timestamp))) % (2**11);
 
     }
 
@@ -127,6 +131,20 @@ contract Dapz is Ownable, ERC20 {
     function _dayPassed(address first, address second) private view returns(bool){
         return (lastDap[first][second]-block.timestamp) > (1 days + 2000);
 
+    }
+    
+    function CreateNewChallenge(address friend) public {
+        require(dailyDaps[friend][msg.sender] != 0);
+        require((lastDay - block.timestamp) > (1 days + 2000));
+       
+        lastDay = block.timestamp;
+       
+        difficulty = uint(keccak256(abi.encodePacked(dailyDaps[friend][msg.sender] % block.timestamp))) % 10;
+        challenge = 2 ** (difficulty+1);
+        dailyReward = ((10-difficulty) ** 2) * 10;
+        
+        require((totalSupply() + uint(dailyReward/10))<=maxSupply);
+        _mint(sender, dailyReward/10);   
     }
 
     function _resetTimer(address sender, address friend) private {
