@@ -129,13 +129,13 @@ contract Dapz is Ownable, ERC20 {
     }
 
     function _dayPassed(address first, address second) private view returns(bool){
-        return (lastDap[first][second]-block.timestamp) > (1 days + 2000);
+        return (block.timestamp - lastDap[first][second]) > (1 days + 2000);
 
     }
     
     function CreateNewChallenge(address friend) public {
         require(dailyDaps[friend][msg.sender] != 0);
-        require((lastDay - block.timestamp) > (1 days + 2000));
+        require((block.timestamp - lastDay) > (1 days + 2000));
        
         lastDay = block.timestamp;
        
