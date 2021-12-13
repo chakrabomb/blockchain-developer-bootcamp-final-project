@@ -33,7 +33,7 @@ contract Dapz is Ownable, ERC20 {
         
         challenge = 2 ** (difficulty+1);
         dailyReward = ((10-difficulty) ** 2) * 10;
-        maxSupply = 1000000000000000;
+        maxSupply = 100000000000;
         lastDay = block.timestamp;
     }
 
