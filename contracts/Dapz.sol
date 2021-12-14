@@ -156,6 +156,7 @@ contract Dapz is Ownable, ERC20 {
     /// @param friend the second person who the person who sends the txn wants to play with
     /// @dev after the second person rolls this function auto calls another internal function to check and mint rewards
     function DailyRoll(address friend) public {
+        require(msg.sender != friend);
         
         if(!timedOut[msg.sender][friend] && !timedOut[friend][msg.sender]){
             _dapRoll(msg.sender, friend);
